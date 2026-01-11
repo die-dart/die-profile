@@ -46,16 +46,23 @@ body {
     filter: grayscale(100%) contrast(1.2);
 }
 
-/* For iframe, ensure it covers the background properly */
+/* For iframe with vertical video (9:16), ensure it covers the background properly */
 #bg-video[src*="vimeo"] {
-    width: 100vw;
-    height: 56.25vw; /* 16:9 aspect ratio */
-    min-height: 100vh;
-    min-width: 177.77vh; /* 16:9 aspect ratio */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 177.78vw;
+    /* Force 9:16 aspect ratio based on width */
+}
+
+/* For screens taller than 9:16 (very tall mobile screens), size based on height */
+@media (max-aspect-ratio: 9/16) {
+    #bg-video[src*="vimeo"] {
+        width: 56.25vh;
+        height: 100vh;
+    }
 }
 
 /* Animated Analog Noise Overlay */
@@ -128,7 +135,7 @@ body {
     }
 }
 
-/* Main UI Grid - CRITICAL: removed inversion effect for consistency */
+/* Main UI Grid - CRITICAL: inversion effect restored for negative theme */
 #ui-grid {
     position: fixed;
     top: 0;
@@ -142,6 +149,7 @@ body {
     padding: 60px;
     z-index: 10;
     color: #ffffff;
+    mix-blend-mode: difference;
 }
 
 /* Left Navigation Sidebar */
