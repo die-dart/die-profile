@@ -67,3 +67,35 @@ document.addEventListener('keydown', (e) => {
         document.documentElement.style.setProperty('--noise-opacity', newOpacity);
     }
 });
+
+// Brutalist Menu Toggle Logic
+document.addEventListener('DOMContentLoaded', () => {
+    const menuTrigger = document.querySelector('.menu-trigger');
+    const menuOverlay = document.querySelector('.menu-overlay');
+    const triggerText = document.querySelector('.trigger-text');
+    let isMenuOpen = false;
+
+    if (menuTrigger && menuOverlay) {
+        menuTrigger.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            
+            // Toggle Active Classes
+            menuOverlay.classList.toggle('active');
+            menuTrigger.classList.toggle('active');
+            
+            // Toggle Text
+            triggerText.textContent = isMenuOpen ? '_CLOSE' : '_MENU';
+        });
+        
+        // Close menu when clicking a link
+        const menuLinks = document.querySelectorAll('.menu-link');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                menuOverlay.classList.remove('active');
+                menuTrigger.classList.remove('active');
+                triggerText.textContent = '_MENU';
+            });
+        });
+    }
+});
