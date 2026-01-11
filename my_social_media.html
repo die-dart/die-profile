@@ -20,8 +20,8 @@
         <div id="noise-overlay"></div>
     </div>
 
-    <!-- Main UI Grid Overlay -->
-    <div id="ui-grid">
+    <!-- Layer 1: Navigation Grid (Negative Theme) -->
+    <div id="nav-layer" class="ui-layer negative-layer">
         <!-- Left Navigation Sidebar -->
         <nav class="nav-sidebar">
             <div class="nav-item">
@@ -40,7 +40,10 @@
                 <span class="nav-arrow">↘</span>
             </div>
         </nav>
+    </div>
 
+    <!-- Layer 2: Main Content Grid (Normal Theme) -->
+    <div id="content-layer" class="ui-layer content-layer">
         <!-- Main Profile Card -->
         <div class="profile-container">
             <div class="profile-card">

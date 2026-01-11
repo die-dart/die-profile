@@ -353,8 +353,8 @@ body {
    Navigation Sidebar Styles
    ======================================== */
 
-/* Main UI Grid */
-#ui-grid {
+/* Main UI Layer (Grid Layout) - Shared by both layers */
+.ui-layer {
     position: fixed;
     top: 0;
     left: 0;
@@ -364,10 +364,20 @@ body {
     grid-template-columns: 280px 1fr;
     gap: 40px;
     padding: 60px;
+    pointer-events: none;
+    /* Allow clicks to pass through empty space */
+}
+
+/* Negative Theme Layer (Sidebar) */
+.negative-layer {
     z-index: 10;
-    color: #ffffff;
     mix-blend-mode: difference;
-    /* Match index.html negative theme */
+    color: #ffffff;
+}
+
+/* Content Layer (Profile Card) */
+.content-layer {
+    z-index: 11;
 }
 
 /* Left Navigation Sidebar */
@@ -378,6 +388,25 @@ body {
     flex-direction: column;
     justify-content: center;
     gap: 32px;
+    pointer-events: auto;
+    /* Re-enable clicks */
+    mix-blend-mode: normal;
+    /* Reset any previous attempts */
+}
+
+/* Profile Container */
+.profile-container {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    /* Ensure flex is mainlayout property found in original .profile-container rule? 
+                     Wait, original rule lines 146-154 defined this. 
+                     I should check if I need to duplicate styles or if .profile-container rule still exists below. 
+                     It exists at line 146. 
+                     But I need to ensure pointer-events: auto is added. 
+    */
+    pointer-events: auto;
+    /* Re-enable clicks */
 }
 
 .nav-item {
@@ -476,32 +505,9 @@ body {
     mix-blend-mode: normal;
 }
 
-/* Wait, if #ui-grid has difference, everything inside inherits the composite rendering 
-   unless we isolate. Let's try applying mix-blend-mode ONLY to individual elements 
-   to ensure it works responsively and isn't blocked by container stacking.
-*/
-#ui-grid {
-    mix-blend-mode: normal;
-    /* Reset for this page */
-}
-
-/* Reset container blend mode */
-.nav-sidebar {
-    mix-blend-mode: normal;
-}
-
-/* Apply Negative Theme directly to text elements */
-.nav-item,
-.nav-link,
-.nav-index,
-.nav-arrow {
-    mix-blend-mode: difference;
-    color: #fff;
-}
-
 /* Responsive adjustments for navigation */
 @media (max-width: 1024px) {
-    #ui-grid {
+    .ui-layer {
         grid-template-columns: 200px 1fr;
         gap: 30px;
         padding: 40px;
@@ -513,7 +519,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    #ui-grid {
+    .ui-layer {
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
         gap: 20px;
