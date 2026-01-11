@@ -1,5 +1,5 @@
-/* Google Fonts - Industrial/Grunge Typography */
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Teko:wght@300;400;600&display=swap');
+/* Google Fonts - Industrial/Grunge Typography + Serif for Editorial Look */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Teko:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
 
 /* CSS Reset & Base */
 * {
@@ -11,6 +11,154 @@
 :root {
     --noise-opacity: 0.15;
     --glitch-intensity: 2px;
+    --menu-text-color: #1a1a1a;
+    --menu-bg-color: #e0e0e0;
+}
+
+/* ... existing body styles ... */
+
+/* =========================================
+   Brutalist Full-screen Navigation Styles
+   ========================================= */
+
+/* Menu Trigger Button - Fixed Top Right */
+.menu-trigger {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 1000;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    mix-blend-mode: difference;
+    /* Ensures visibility on light/dark backgrounds */
+}
+
+.menu-trigger:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Menu Overlay - Full Screen */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--menu-bg-color);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Noise texture for overlay */
+    background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 2px, #d0d0d0 2px, #d0d0d0 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, #d0d0d0 2px, #d0d0d0 4px);
+    background-blend-mode: multiply;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Menu Items Container */
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* Individual Menu Item */
+.menu-item {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Staggered delay handled by inline --i var */
+    transition-delay: calc(0.05s * var(--i));
+}
+
+.menu-overlay.active .menu-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Menu Index Label */
+.menu-index {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--menu-text-color);
+    opacity: 0.6;
+    transform: translateY(-5px);
+}
+
+/* Menu Link Typography */
+.menu-link {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 400;
+    color: var(--menu-text-color);
+    text-decoration: none;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    font-style: italic;
+    /* Editorial flair */
+}
+
+/* Hover Effect */
+.menu-link:hover {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--menu-text-color);
+    transform: translateX(20px);
+}
+
+.menu-arrow {
+    font-size: 1.5rem;
+    color: #ff0000;
+    /* Red arrow as requested */
+    opacity: 0;
+    transform: translate(-20px, 20px);
+    transition: all 0.4s ease;
+}
+
+.menu-item:hover .menu-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Responsive adjustments for Menu */
+@media (max-width: 768px) {
+    .menu-trigger {
+        top: 20px;
+        right: 20px;
+        padding: 8px 16px;
+    }
+
+    .menu-link {
+        font-size: 3rem;
+    }
+
+    .menu-items {
+        gap: 20px;
+        padding-left: 40px;
+    }
 }
 
 body {
@@ -136,6 +284,7 @@ body {
 }
 
 /* Main UI Grid - CRITICAL: inversion effect restored for negative theme */
+/* Main UI Grid - Refactored for Fluidity */
 #ui-grid {
     position: fixed;
     top: 0;
@@ -143,6 +292,7 @@ body {
     width: 100vw;
     height: 100vh;
     display: grid;
+    /* Desktop: 4 Columns (Sidebar | Content | Logos | Info) */
     grid-template-columns: 280px 1fr 350px 300px;
     grid-template-rows: 200px 1fr;
     gap: 40px;
@@ -150,9 +300,14 @@ body {
     z-index: 10;
     color: #ffffff;
     mix-blend-mode: difference;
+    pointer-events: none;
 }
 
-/* Left Navigation Sidebar */
+#ui-grid>* {
+    pointer-events: auto;
+}
+
+/* Left Navigation Sidebar (Visible on Desktop) */
 .nav-sidebar {
     grid-column: 1;
     grid-row: 1 / -1;
@@ -210,30 +365,31 @@ body {
     transform: translateY(-50%);
 }
 
-/* Glitch effect on hover */
-@keyframes glitch {
-    0% {
-        text-shadow: var(--glitch-intensity) 0 0 currentColor;
-    }
+/* =========================================
+   Brutalist Full-screen Navigation Styles
+   ========================================= */
 
-    25% {
-        text-shadow: calc(-1 * var(--glitch-intensity)) 0 0 currentColor;
-    }
-
-    50% {
-        text-shadow: 0 var(--glitch-intensity) 0 currentColor;
-    }
-
-    75% {
-        text-shadow: 0 calc(-1 * var(--glitch-intensity)) 0 currentColor;
-    }
-
-    100% {
-        text-shadow: var(--glitch-intensity) var(--glitch-intensity) 0 currentColor;
-    }
+/* Menu Trigger Button - HIDDEN by default (Desktop) */
+.menu-trigger {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    z-index: 1000;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    mix-blend-mode: difference;
+    display: none;
+    /* Hide on Desktop */
 }
 
-/* Center Symbol (Unicursal Hexagram) */
+/* Center Symbol */
 .center-symbol {
     grid-column: 2 / 4;
     grid-row: 1 / -1;
@@ -250,34 +406,13 @@ body {
 }
 
 .center-symbol img {
+    /* ... */
     width: 450px;
     height: 450px;
     /* Multiple shadows for stronger glow effect */
     filter:
         invert(1) brightness(1.2) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 90px rgba(255, 255, 255, 0.4));
     animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        opacity: 0.7;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 /* Top Right Logos */
@@ -291,24 +426,19 @@ body {
 }
 
 .logo-nxgen {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 64px;
-    font-weight: 700;
-    letter-spacing: 8px;
-    text-transform: uppercase;
-    line-height: 0.8;
-    text-align: right;
+    width: auto;
+    height: 50px;
+    /* Reduced from 80px */
+    object-fit: contain;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    /* Subtle glow to match theme */
+    margin-bottom: -10px;
+    /* Tweak spacing if needed */
 }
 
 .logo-band {
     width: 100%;
     max-width: 280px;
-}
-
-.logo-band svg {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 0 8px currentColor);
 }
 
 /* Far Right Info Column */
@@ -317,9 +447,11 @@ body {
     grid-row: 2;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: flex-end;
+    /* Align to bottom */
     align-items: flex-end;
     text-align: right;
+    padding-bottom: 40px;
 }
 
 .info-text {
@@ -330,101 +462,97 @@ body {
     max-width: 280px;
 }
 
-.info-label {
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 1px;
-}
-
-.info-small {
-    font-size: 9px;
-    opacity: 0.8;
-    line-height: 1.8;
-}
-
-/* Scanline effect overlay */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(0deg,
-            rgba(0, 0, 0, 0.15) 0px,
-            transparent 1px,
-            transparent 2px,
-            rgba(0, 0, 0, 0.15) 3px);
-    pointer-events: none;
-    z-index: 100;
-    opacity: 0.3;
-    animation: scanline 8s linear infinite;
-}
-
-@keyframes scanline {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(100%);
-    }
-}
-
-/* Vignette effect */
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
-    pointer-events: none;
-    z-index: 99;
-}
-
 /* Responsive adjustments */
-@media (max-width: 1400px) {
+@media (max-width: 1024px) {
     #ui-grid {
-        grid-template-columns: 240px 1fr 280px 260px;
-        gap: 30px;
+        /* Tablet: 3 Columns (Sidebar | Content | Right) */
+        grid-template-columns: 200px 1fr 240px;
         padding: 40px;
+    }
+
+    .center-symbol {
+        grid-column: 2;
+    }
+
+    .top-right-logos,
+    .info-column {
+        grid-column: 3;
+    }
+
+    .logo-nxgen {
+        height: 40px;
+        /* Reduced from 60px */
+    }
+}
+
+@media (max-width: 768px) {
+    #ui-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        gap: 20px;
+        padding: 20px;
+        height: 100vh;
+        overflow-y: hidden;
+        /* Prevent scroll on mobile main view */
+    }
+
+    /* Stack Order: Logos Top, Symbol Middle, Info Bottom */
+    .top-right-logos {
+        grid-column: 1;
+        grid-row: 1;
+        align-items: center;
+        /* Center on mobile? or keep right? User said "fluid". Center is usually better for mobile title. */
+        align-items: flex-end;
+        /* Keep aesthetic */
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .logo-nxgen {
+        height: 30px;
+        /* Reduced from 40px */
+        margin-bottom: 0;
+    }
+
+    .logo-band {
+        max-width: 100px;
+    }
+
+    .center-symbol {
+        grid-column: 1;
+        grid-row: 2;
     }
 
     .center-symbol svg,
     .center-symbol img {
-        width: 350px;
-        height: 350px;
-    }
-
-    .nav-link {
-        font-size: 36px;
-    }
-
-    .logo-nxgen {
-        font-size: 52px;
-    }
-}
-
-@media (max-width: 1024px) {
-    #ui-grid {
-        grid-template-columns: 200px 1fr 240px;
-        grid-template-rows: auto auto 1fr;
+        width: 70vw;
+        height: 70vw;
     }
 
     .info-column {
-        grid-column: 3;
+        grid-column: 1;
         grid-row: 3;
+        align-items: center;
+        /* Center bottom info */
+        text-align: center;
+        padding-bottom: 20px;
     }
 
-    .top-right-logos {
-        grid-column: 3;
-        grid-row: 1;
+    .info-text {
+        font-size: 10px;
+        max-width: 100%;
     }
 
-    .center-symbol {
-        grid-column: 2 / 3;
-        grid-row: 2 / -1;
+    /* Show Menu Trigger for Mobile */
+    .menu-trigger {
+        display: block;
+        top: 20px;
+        right: 20px;
+    }
+
+    /* Hide Sidebar for Mobile */
+    .nav-sidebar {
+        display: none;
     }
 }
