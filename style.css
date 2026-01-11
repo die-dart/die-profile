@@ -1,0 +1,422 @@
+/* Google Fonts - Industrial/Grunge Typography */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&family=Teko:wght@300;400;600&display=swap');
+
+/* CSS Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --noise-opacity: 0.15;
+    --glitch-intensity: 2px;
+}
+
+body {
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: #fff;
+}
+
+/* Background Video Container */
+#bg-video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #0a0a0a;
+    overflow: hidden;
+}
+
+/* Background Video Element (supports both <video> and <iframe>) */
+#bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none;
+    filter: grayscale(100%) contrast(1.2);
+}
+
+/* For iframe, ensure it covers the background properly */
+#bg-video[src*="vimeo"] {
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+    min-height: 100vh;
+    min-width: 177.77vh; /* 16:9 aspect ratio */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Animated Analog Noise Overlay */
+#noise-overlay {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px),
+        repeating-linear-gradient(90deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px);
+    animation: noise 0.2s infinite;
+    opacity: var(--noise-opacity);
+    pointer-events: none;
+}
+
+/* Noise texture animation */
+@keyframes noise {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    10% {
+        transform: translate(-5%, -5%);
+    }
+
+    20% {
+        transform: translate(-10%, 5%);
+    }
+
+    30% {
+        transform: translate(5%, -10%);
+    }
+
+    40% {
+        transform: translate(-5%, 15%);
+    }
+
+    50% {
+        transform: translate(-10%, 5%);
+    }
+
+    60% {
+        transform: translate(15%, 0);
+    }
+
+    70% {
+        transform: translate(0, 10%);
+    }
+
+    80% {
+        transform: translate(-15%, 0);
+    }
+
+    90% {
+        transform: translate(10%, 5%);
+    }
+
+    100% {
+        transform: translate(5%, 0);
+    }
+}
+
+/* Main UI Grid - CRITICAL: removed inversion effect for consistency */
+#ui-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr 350px 300px;
+    grid-template-rows: 200px 1fr;
+    gap: 40px;
+    padding: 60px;
+    z-index: 10;
+    color: #ffffff;
+}
+
+/* Left Navigation Sidebar */
+.nav-sidebar {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    transform: translateX(8px);
+}
+
+.nav-index {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    font-family: 'Teko', sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    line-height: 0.9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    letter-spacing: 6px;
+    animation: glitch 0.3s infinite;
+}
+
+.nav-arrow {
+    font-size: 16px;
+    opacity: 0.5;
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Glitch effect on hover */
+@keyframes glitch {
+    0% {
+        text-shadow: var(--glitch-intensity) 0 0 currentColor;
+    }
+
+    25% {
+        text-shadow: calc(-1 * var(--glitch-intensity)) 0 0 currentColor;
+    }
+
+    50% {
+        text-shadow: 0 var(--glitch-intensity) 0 currentColor;
+    }
+
+    75% {
+        text-shadow: 0 calc(-1 * var(--glitch-intensity)) 0 currentColor;
+    }
+
+    100% {
+        text-shadow: var(--glitch-intensity) var(--glitch-intensity) 0 currentColor;
+    }
+}
+
+/* Center Symbol (Unicursal Hexagram) */
+.center-symbol {
+    grid-column: 2 / 4;
+    grid-row: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-symbol svg {
+    width: 450px;
+    height: 450px;
+    filter: drop-shadow(0 0 20px currentColor);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+.center-symbol img {
+    width: 450px;
+    height: 450px;
+    /* Multiple shadows for stronger glow effect */
+    filter:
+        invert(1) brightness(1.2) drop-shadow(0 0 30px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 60px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 90px rgba(255, 255, 255, 0.4));
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Top Right Logos */
+.top-right-logos {
+    grid-column: 4;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+.logo-nxgen {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    line-height: 0.8;
+    text-align: right;
+}
+
+.logo-band {
+    width: 100%;
+    max-width: 280px;
+}
+
+.logo-band svg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Far Right Info Column */
+.info-column {
+    grid-column: 4;
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.info-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    max-width: 280px;
+}
+
+.info-label {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.info-small {
+    font-size: 9px;
+    opacity: 0.8;
+    line-height: 1.8;
+}
+
+/* Scanline effect overlay */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15) 0px,
+            transparent 1px,
+            transparent 2px,
+            rgba(0, 0, 0, 0.15) 3px);
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.3;
+    animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+/* Vignette effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    pointer-events: none;
+    z-index: 99;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1400px) {
+    #ui-grid {
+        grid-template-columns: 240px 1fr 280px 260px;
+        gap: 30px;
+        padding: 40px;
+    }
+
+    .center-symbol svg,
+    .center-symbol img {
+        width: 350px;
+        height: 350px;
+    }
+
+    .nav-link {
+        font-size: 36px;
+    }
+
+    .logo-nxgen {
+        font-size: 52px;
+    }
+}
+
+@media (max-width: 1024px) {
+    #ui-grid {
+        grid-template-columns: 200px 1fr 240px;
+        grid-template-rows: auto auto 1fr;
+    }
+
+    .info-column {
+        grid-column: 3;
+        grid-row: 3;
+    }
+
+    .top-right-logos {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    .center-symbol {
+        grid-column: 2 / 3;
+        grid-row: 2 / -1;
+    }
+}

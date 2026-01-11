@@ -1,0 +1,427 @@
+/* Google Fonts - Clean Modern Typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* CSS Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --card-bg: rgba(55, 55, 55, 0.85);
+    --text-primary: #ffffff;
+    --text-secondary: #d1d1d1;
+    --accent-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background Video Container */
+#bg-video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #1a1a1a;
+    overflow: hidden;
+}
+
+/* Background Video Element */
+#bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+/* Noise overlay - subtle */
+#noise-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.02) 2px,
+            rgba(255, 255, 255, 0.02) 4px);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Profile Container - Centered */
+.profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    z-index: 10;
+}
+
+/* Profile Card */
+.profile-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 32px;
+    padding: 60px 40px 40px;
+    max-width: 580px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Profile Photo */
+.profile-photo {
+    margin: 0 auto 30px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Profile Name */
+.profile-name {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+/* Profile Tagline */
+.profile-tagline {
+    font-size: 20px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* Location */
+.profile-location {
+    margin-bottom: 32px;
+}
+
+.profile-location code {
+    display: inline-block;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 20px;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+}
+
+/* Anonymous Message Button */
+.message-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(60, 60, 60, 0.9);
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message-btn:hover {
+    background: rgba(80, 80, 80, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.message-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Social Icons Container */
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Individual Social Icon */
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: rgba(220, 220, 220, 0.95);
+    border-radius: 50%;
+    color: #1a1a1a;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #ffffff;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 48px 32px 32px;
+        max-width: 90%;
+        border-radius: 24px;
+    }
+
+    .profile-photo {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 24px;
+    }
+
+    .profile-name {
+        font-size: 36px;
+    }
+
+    .profile-tagline {
+        font-size: 18px;
+    }
+
+    .message-btn {
+        font-size: 15px;
+        padding: 14px 28px;
+    }
+
+    .social-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .social-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-name {
+        font-size: 32px;
+    }
+
+    .profile-tagline {
+        font-size: 16px;
+    }
+
+    .profile-location code {
+        font-size: 12px;
+        padding: 6px 16px;
+    }
+
+    .social-icons {
+        gap: 12px;
+    }
+
+    .social-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .social-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* ========================================
+   Navigation Sidebar Styles
+   ======================================== */
+
+/* Main UI Grid */
+#ui-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    padding: 60px;
+    z-index: 10;
+    color: #ffffff;
+}
+
+/* Left Navigation Sidebar */
+.nav-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    transform: translateX(8px);
+}
+
+.nav-index {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.nav-link {
+    font-family: 'Teko', sans-serif;
+    font-size: 42px;
+    font-weight: 600;
+    text-decoration: none;
+    color: inherit;
+    line-height: 0.9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+    letter-spacing: 6px;
+    animation: glitch 0.3s infinite;
+}
+
+.nav-arrow {
+    font-size: 16px;
+    opacity: 0.5;
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Glitch effect on hover */
+@keyframes glitch {
+    0% {
+        text-shadow: 2px 0 0 currentColor;
+    }
+
+    25% {
+        text-shadow: -2px 0 0 currentColor;
+    }
+
+    50% {
+        text-shadow: 0 2px 0 currentColor;
+    }
+
+    75% {
+        text-shadow: 0 -2px 0 currentColor;
+    }
+
+    100% {
+        text-shadow: 2px 2px 0 currentColor;
+    }
+}
+
+/* Adjust profile container when nav is present */
+#ui-grid .profile-container {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+}
+
+/* Responsive adjustments for navigation */
+@media (max-width: 1024px) {
+    #ui-grid {
+        grid-template-columns: 200px 1fr;
+        gap: 30px;
+        padding: 40px;
+    }
+
+    .nav-link {
+        font-size: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    #ui-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .nav-sidebar {
+        grid-column: 1;
+        grid-row: 1;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 16px;
+        overflow-x: auto;
+    }
+
+    .nav-item {
+        flex-shrink: 0;
+    }
+
+    .nav-link {
+        font-size: 24px;
+    }
+
+    #ui-grid .profile-container {
+        grid-column: 1;
+        grid-row: 2;
+    }
+}
